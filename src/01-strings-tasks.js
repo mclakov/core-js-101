@@ -95,8 +95,8 @@ function getFirstChar(value) {
  *   'cat'              => 'cat'
  *   '\tHello, World! ' => 'Hello, World!'
  */
-function removeLeadingAndTrailingWhitespaces(/* value */) {
-  throw new Error('Not implemented');
+function removeLeadingAndTrailingWhitespaces(value) {
+  return value.trim();
 }
 
 /**
@@ -126,8 +126,8 @@ function repeatString(value, count) {
  *   'I like legends', 'end' => 'I like legs',
  *   'ABABAB','BA' => 'ABAB'
  */
-function removeFirstOccurrences(/* str, value */) {
-  throw new Error('Not implemented');
+function removeFirstOccurrences(str, value) {
+  return str.slice(0, str.indexOf(value)) + str.slice(str.indexOf(value) + value.length);
 }
 
 /**
@@ -141,8 +141,8 @@ function removeFirstOccurrences(/* str, value */) {
  *   '<span>' => 'span'
  *   '<a>' => 'a'
  */
-function unbracketTag(/* str */) {
-  throw new Error('Not implemented');
+function unbracketTag(str) {
+  return str.slice(1, -1);
 }
 
 
@@ -156,8 +156,8 @@ function unbracketTag(/* str */) {
  *   'Thunderstruck' => 'THUNDERSTRUCK'
  *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
  */
-function convertToUpperCase(/* str */) {
-  throw new Error('Not implemented');
+function convertToUpperCase(str) {
+  return str.toUpperCase();
 }
 
 /**
@@ -175,8 +175,8 @@ function convertToUpperCase(/* str */) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+function extractEmails(str) {
+  return str.split(';');
 }
 
 /**
@@ -202,8 +202,20 @@ function extractEmails(/* str */) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  let top = '';
+  let bottom = '';
+  let side = '';
+  const symbol1 = '─';
+  const symbol2 = ' ';
+  const symbol3 = '│';
+
+  if (width < 2 || height < 2) return false;
+
+  top = `┌${symbol1.repeat(width - 2)}┐\n`;
+  side = `${symbol3}${symbol2.repeat(width - 2)}${symbol3}\n`;
+  bottom = `└${symbol1.repeat(width - 2)}┘\n`;
+  return top + side.repeat(height - 2) + bottom;
 }
 
 
@@ -223,8 +235,29 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const arr = [];
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < str.length; i++) {
+    if (str.charCodeAt(i) >= 65 && str.charCodeAt(i) <= 90) {
+      if (str.charCodeAt(i) + 13 > 90) {
+        arr.push(String.fromCharCode(str.charCodeAt(i) + 13 - 26));
+      } else {
+        arr.push(String.fromCharCode(str.charCodeAt(i) + 13));
+      }
+    }
+    if (str.charCodeAt(i) >= 97 && str.charCodeAt(i) <= 122) {
+      if (str.charCodeAt(i) + 13 > 122) {
+        arr.push(String.fromCharCode(str.charCodeAt(i) + 13 - 26));
+      } else {
+        arr.push(String.fromCharCode(str.charCodeAt(i) + 13));
+      }
+    }
+    if (str.charCodeAt(i) > 122 || str.charCodeAt(i) < 65) {
+      arr.push(String.fromCharCode(str.charCodeAt(i)));
+    }
+  }
+  return arr.join('');
 }
 
 /**
@@ -240,8 +273,9 @@ function encodeToRot13(/* str */) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+function isString(value) {
+  if (typeof value === 'string' || value instanceof String) return true;
+  return false;
 }
 
 
@@ -269,8 +303,15 @@ function isString(/* value */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const desk = ['A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣', 'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦',
+    'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥',
+    'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠'];
+  let id = null;
+  desk.forEach((card, index) => {
+    if (value === card) id = index;
+  });
+  return id;
 }
 
 
