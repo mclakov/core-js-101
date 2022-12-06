@@ -20,6 +20,7 @@
  */
 function concatenateStrings(/* value1, value2 */) {
   throw new Error('Not implemented');
+
 }
 
 
