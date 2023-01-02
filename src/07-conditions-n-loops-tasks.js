@@ -43,8 +43,12 @@ function getFizzBuzz(/* num */) {
  *   5  => 120
  *   10 => 3628800
  */
-function getFactorial(/* n */) {
-  throw new Error('Not implemented');
+function getFactorial(n) {
+  let fac = 1;
+  for (let i = fac; i <= n; i += 1) {
+    fac *= i;
+  }
+  return fac;
 }
 
 
