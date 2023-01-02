@@ -452,8 +452,12 @@ function sortCitiesArray(arr) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  return Array(n).fill('').map((elem, index) => {
+    const arr = Array(n).fill(0);
+    arr[index] = 1;
+    return arr;
+  });
 }
 
 /**
@@ -555,8 +559,7 @@ function group(array, keySelector, valueSelector) {
  *   ['one','two','three'], (x) => x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
 function selectMany(arr, childrenSelector) {
-  return arr.map(childrenSelector)
-    .flat();
+  return arr.map(childrenSelector).flat();
 }
 
 
@@ -595,14 +598,14 @@ function getElementByIndexes(arr, indexes) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
-  // const copyArr = [...arr];
-  // if (arr.length === 0 || arr.length === 1) return arr;
-  // const half = Math.floor(arr.length / 2);
-  // const head = copyArr.splice(arr.length - half, half);
-  // const tail = arr.splice(0, half);
-  // return [...head, ...tail];
+function swapHeadAndTail(arr) {
+  if (arr.length === 0 || arr.length === 1) return arr;
+  const halfLength = Math.floor(arr.length / 2);
+  const head = arr.slice(-halfLength);
+  const tail = arr.slice(0, halfLength);
+  if (arr.length % 2) {
+    return [...head, arr[halfLength], ...tail];
+  } return [...head, ...tail];
 }
 
 
