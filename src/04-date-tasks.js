@@ -44,7 +44,7 @@ function parseDataFromIso8601(value) {
  * Please find algorithm here: https://en.wikipedia.org/wiki/Leap_year#Algorithm
  *
  * @param {date} date
- * @return {bool}
+ * @return {boolean}
  *
  * @example :
  *    Date(1900,1,1)    => false
@@ -53,8 +53,10 @@ function parseDataFromIso8601(value) {
  *    Date(2012,1,1)    => true
  *    Date(2015,1,1)    => false
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+function isLeapYear(date) {
+  const newDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 28);
+  if (newDate.getMonth() === 2) return false;
+  return true;
 }
 
 
@@ -73,8 +75,17 @@ function isLeapYear(/* date */) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,0,250)     => "00:00:00.250"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
-function timeSpanToString(/* startDate, endDate */) {
-  throw new Error('Not implemented');
+function timeSpanToString(startDate, endDate) {
+  const ms = endDate - startDate;
+  const hour = Math.floor(ms / 3600000);
+  const minute = Math.floor((ms - hour * 3600000) / 60000);
+  const second = Math.floor((ms - minute * 60000 - hour * 3600000) / 1000);
+  const remMs = Math.floor(ms - minute * 60000 - hour * 3600000 - second * 1000);
+  return `${String(hour)
+    .padStart(2, 0)}:${String(minute)
+    .padStart(2, 0)}:${String(second)
+    .padStart(2, 0)}.${String(remMs)
+    .padStart(3, 0)}`;
 }
 
 
@@ -94,8 +105,13 @@ function timeSpanToString(/* startDate, endDate */) {
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
-function angleBetweenClockHands(/* date */) {
-  throw new Error('Not implemented');
+function angleBetweenClockHands(date) {
+  const newDate = new Date(date);
+  const min = newDate.getUTCMinutes();
+  const hour = newDate.getUTCHours();
+  let angle = Math.abs(0.5 * (60 * hour - 11 * min)) % 360;
+  angle = angle > 180 ? 360 - angle : angle;
+  return (angle * Math.PI) / 180;
 }
 
 
